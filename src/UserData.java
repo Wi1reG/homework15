@@ -15,7 +15,7 @@ public class UserData {
         return password.matches("^[a-zA-Z0-9_]{1,20}$");
     }
 
-    public static void validateLogin(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException {
+    public static void validateLogin(String login, String password, String confirmPassword) throws WrongLoginException, WrongPasswordException, PasswordMismatchException {
         try {
             if (login.length() > 20 || !isValidLogin(login)) {
                 throw new WrongLoginException("Логин должен быть длиной не более 20 символов и содержать только латинские буквы, цифры и подчеркивание..");
@@ -24,9 +24,9 @@ public class UserData {
                 throw new WrongPasswordException("Пароль должен быть длиной не более 20 символов и содержать только латинские буквы, цифры и подчеркивание.");
             }
             if (!password.equals(confirmPassword)) {
-                throw new WrongPasswordException("Пароли не совпадают.");
+                throw new PasswordMismatchException("Пароли не совпадают.");
             }
-        } catch (WrongLoginException | WrongPasswordException e) {
+        } catch (WrongLoginException | WrongPasswordException | PasswordMismatchException e) {
             throw e;
         }
     }
